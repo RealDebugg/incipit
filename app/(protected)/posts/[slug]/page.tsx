@@ -12,7 +12,7 @@ export default function SlugPage() {
 
   const breadcrumbs = [
     { label: "Posts", href: "/posts" },
-    { label: slugLabel },
+    { label: slugLabel == "new" ? "New Post" : "Edit: " + slugLabel },
   ];
 
   return (

@@ -21,6 +21,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import Link from "next/link";
 
 export function NavUser({
   user,
@@ -84,21 +85,21 @@ export function NavUser({
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <a href="/account" className="flex w-full items-center gap-2">
+                <Link href="/account" className="flex w-full items-center gap-2">
                   <BadgeCheckIcon
                   />
                   Account
-                </a>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <a href="/auth/logout" className="flex w-full items-center gap-2">
+                <Link href="/auth/logout" className="flex w-full items-center gap-2">
                   <LogOutIcon
                   />
                   Log out
-                </a>
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
