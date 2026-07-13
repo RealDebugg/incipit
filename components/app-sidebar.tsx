@@ -16,7 +16,7 @@ const data = {
   navMain: [
     {
       title: "Dashboard",
-      url: "#",
+      url: "/dashboard",
       icon: (
         <LayoutDashboardIcon
         />
@@ -25,7 +25,7 @@ const data = {
     },
     {
       title: "Posts",
-      url: "#",
+      url: "/posts",
       icon: (
         <PenLineIcon
         />
@@ -34,7 +34,7 @@ const data = {
     },
     {
       title: "Tags",
-      url: "#",
+      url: "/tags",
       icon: (
         <TagsIcon
         />
@@ -45,7 +45,7 @@ const data = {
   navSecondary: [
     {
       title: "Settings",
-      url: "#",
+      url: "/settings",
       icon: (
         <Settings2Icon
         />

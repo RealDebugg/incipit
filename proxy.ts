@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth0 } from "./lib/auth0";
 import { getAuthSession } from "./lib/session";
 
-const PROTECTED_ROUTE_PATTERNS = ["/dashboard/**", "/posts/**"];
+const PROTECTED_ROUTE_PATTERNS = ["/dashboard/**", "/posts/**", "/tags/**", "/settings/**", "/account/**"];
 
 function escapeRegExp(value: string) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
