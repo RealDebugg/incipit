@@ -1,25 +1,56 @@
+import { NextRequest, NextResponse } from "next/server";
+
 import { auth0 } from "./lib/auth0";
-import {NextRequest} from "next/server";
+import { getAuthSession } from "./lib/session";
 
-export async function proxy(request: Request | NextRequest) {
-    /*
-    The proxy layer automatically mounts these authentication routes:
+const PROTECTED_ROUTE_PATTERNS = ["/dashboard/**", "/posts/**"];
 
-    /auth/login - Redirects to Auth0 login page
-    /auth/logout - Logs out the user
-    /auth/callback - Handles the OAuth callback
-    /auth/profile - Returns the user profile as JSON
-    /auth/access-token - Returns the access token
-    /auth/backchannel-logout - Receives a logout_token when a configured Back-Channel Logout initiator occurs
-    */
-    const authResponse = await auth0.middleware(request);
+function escapeRegExp(value: string) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
-    // Always return the auth response.
-    //
-    // Note: The auth response forwards requests to your app routes by default.
-    // If you need to block requests, do it before calling auth0.middleware() or
-    // copy the authResponse headers except for x-middleware-next to your blocking response.
-    return authResponse;
+function globToRegExp(pattern: string) {
+    if (pattern.endsWith("/**")) {
+        const base = pattern.slice(0, -3);
+        return new RegExp(`^${escapeRegExp(base)}(?:/.*)?$`);
+    }
+
+    const withPlaceholders = pattern.replace(/\*\*/g, "__DOUBLE_STAR__");
+    const escaped = escapeRegExp(withPlaceholders);
+    const regexSource = escaped
+        .replace(/__DOUBLE_STAR__/g, ".*")
+        .replace(/\\\*/g, "[^/]*");
+
+    return new RegExp(`^${regexSource}$`);
+}
+
+const protectedRouteRegexes = PROTECTED_ROUTE_PATTERNS.map((pattern) =>
+    globToRegExp(pattern)
+);
+
+function isProtectedRoute(pathname: string) {
+    return protectedRouteRegexes.some((regex) => regex.test(pathname));
+}
+
+export async function proxy(request: NextRequest) {
+    const pathname = request.nextUrl.pathname;
+
+    // Let Auth0 SDK handle all /auth routes directly.
+    if (pathname.startsWith("/auth")) {
+        return auth0.middleware(request);
+    }
+
+    const session = await getAuthSession(request);
+
+    if (pathname === "/" && session) {
+        return NextResponse.redirect(new URL("/dashboard", request.url));
+    }
+
+    if (isProtectedRoute(pathname) && !session) {
+        return NextResponse.redirect(new URL("/", request.url));
+    }
+
+    return auth0.middleware(request);
 }
 
 export const config = {

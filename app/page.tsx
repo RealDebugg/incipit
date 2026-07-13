@@ -1,31 +1,21 @@
-import { auth0 } from "@/lib/auth0";
+import { LoginForm } from "@/components/login-form";
+import { getAuthSession } from "@/lib/session";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  // Check if user is authenticated
-  const session = await auth0.getSession();
+  const session = await getAuthSession();
 
-  if (!session) {
-    return (
-        <>
-          {/* Redirects to Auth0 to sign up */}
-          <a href="/auth/login?screen_hint=signup">Signup</a>
-          <br />
-          {/* Redirects to Auth0 to log in */}
-          <a href="/auth/login">Login</a>
-        </>
-    );
+  if (session) {
+    redirect("/dashboard");
   }
 
   return (
-      <>
-        <p>Logged in as {session.user.email}</p>
-
-        {/* Display user info (name, email, etc.) */}
-        <h1>User Profile</h1>
-        <pre>{JSON.stringify(session.user, null, 2)}</pre>
-
-        {/* Ends the session and redirects to Auth0 to log out */}
-        <a href="/auth/logout">Logout</a>
-      </>
+    <>
+      <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+        <div className="w-full max-w-sm">
+          <LoginForm />
+        </div>
+      </div>
+    </>
   );
 }
