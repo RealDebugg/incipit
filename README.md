@@ -1,8 +1,11 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Incipit
+> in-ˈsi-pət, -ˈki- : the first part : beginning. specifically : the opening words of a text of a medieval manuscript or early printed book.
+
+This is a [Next.js](https://nextjs.org) based headless CMS & admin interface for blogging which uses Auth0 for authentication & Vercel Neon as well as Prisma for database management.
 
 ## Getting Started
 
-First, run the development server:
+First, run thincipe development server:
 
 ```bash
 npm run dev
