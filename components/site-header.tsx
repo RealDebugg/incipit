@@ -1,5 +1,8 @@
 "use client"
 
+import { Fragment } from "react"
+
+import { useAppShell } from "@/components/app-shell"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,6 +18,7 @@ import { PanelLeftIcon } from "lucide-react"
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
+  const { breadcrumbs } = useAppShell()
 
   return (
     <header className="sticky top-0 z-50 flex w-full items-center border-b bg-background">
@@ -32,17 +36,28 @@ export function SiteHeader() {
           orientation="vertical"
           className="mr-2 data-vertical:h-4 data-vertical:self-auto"
         />
-        <Breadcrumb className="hidden sm:block">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="#">Build Your Application</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        {breadcrumbs.length > 0 ? (
+          <Breadcrumb className="hidden sm:block">
+            <BreadcrumbList>
+              {breadcrumbs.map((item, index) => {
+                const isLast = index === breadcrumbs.length - 1
+
+                return (
+                  <Fragment key={`${item.label}-${index}`}>
+                    <BreadcrumbItem>
+                      {isLast || !item.href ? (
+                        <BreadcrumbPage>{item.label}</BreadcrumbPage>
+                      ) : (
+                        <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+                      )}
+                    </BreadcrumbItem>
+                    {!isLast ? <BreadcrumbSeparator /> : null}
+                  </Fragment>
+                )
+              })}
+            </BreadcrumbList>
+          </Breadcrumb>
+        ) : null}
       </div>
     </header>
   )
