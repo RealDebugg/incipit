@@ -10,7 +10,7 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { PenLineIcon, Settings2Icon, LayoutDashboardIcon } from "lucide-react"
+import { PenLineIcon, Settings2Icon, LayoutDashboardIcon, TagsIcon } from "lucide-react"
 
 const data = {
   navMain: [
@@ -28,6 +28,15 @@ const data = {
       url: "#",
       icon: (
         <PenLineIcon
+        />
+      ),
+      isActive: false,
+    },
+    {
+      title: "Tags",
+      url: "#",
+      icon: (
+        <TagsIcon
         />
       ),
       isActive: false,

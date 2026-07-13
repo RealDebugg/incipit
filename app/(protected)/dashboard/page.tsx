@@ -1,9 +1,5 @@
 import { PageBreadcrumbs } from "@/components/app-shell";
 
-export const iframeHeight = "800px";
-
-export const description = "A sidebar with a header and a search form.";
-
 const breadcrumbs = [
   { label: "Dashboard" },
 ];
