@@ -29,6 +29,7 @@ export default function PostsPage() {
               {/*TODO: Skeleton while loading*/}
               {/*TODO: If no posts, show an empty state (shadcnuikit.com)*/}
               {/*TODO: Datalist includes: cover photo, title, author, status, date, quick actions*/}
+              {/*https://shadcnuikit.com/dashboard/pages/products*/}
               <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                   <div className="aspect-video rounded-xl bg-muted/50"/>
                   <div className="aspect-video rounded-xl bg-muted/50"/>
