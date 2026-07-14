@@ -7,6 +7,8 @@ const breadcrumbs = [
   { label: "Posts" },
 ];
 
+/*TODO: page title = block sm:hidden*/
+
 export default function PostsPage() {
   return (
       <>

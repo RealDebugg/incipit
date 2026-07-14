@@ -1,5 +1,7 @@
 import { PageBreadcrumbs } from "@/components/app-shell";
 
+/*TODO: page title = block sm:hidden*/
+
 const breadcrumbs = [
   { label: "Account" },
 ];

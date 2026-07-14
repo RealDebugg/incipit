@@ -3,6 +3,9 @@
 import { PageBreadcrumbs } from "@/components/app-shell";
 import { useParams } from "next/navigation";
 
+/*https://quilljs.com/*/
+/*TODO: page title = block sm:hidden*/
+
 export default function SlugPage() {
   const slug = useParams()?.slug;
   const slugLabel =

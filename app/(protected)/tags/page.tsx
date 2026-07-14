@@ -4,6 +4,8 @@ const breadcrumbs = [
   { label: "Tags" },
 ];
 
+/*TODO: page title = block sm:hidden*/
+
 export default function TagsPage() {
   return (
     <>

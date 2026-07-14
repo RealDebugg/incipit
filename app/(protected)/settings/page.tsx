@@ -4,6 +4,8 @@ const breadcrumbs = [
   { label: "Settings" },
 ];
 
+/*TODO: page title = block sm:hidden*/
+
 export default function SettingsPage() {
   return (
     <>

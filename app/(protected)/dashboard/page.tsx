@@ -1,5 +1,8 @@
 import { PageBreadcrumbs } from "@/components/app-shell";
 
+/*https://quilljs.com/*/
+/*TODO: page title = block sm:hidden*/
+
 const breadcrumbs = [
   { label: "Dashboard" },
 ];
