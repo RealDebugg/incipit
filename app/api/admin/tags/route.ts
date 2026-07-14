@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import prisma from "@/lib/prisma";
 
 // Get all tags
 export async function GET() {
-    return NextResponse.json({ message: 'Hello from Next.js API!' });
+    const data = await prisma.tags.findMany();
+    return NextResponse.json({ data });
 }
 
 // Create tag
