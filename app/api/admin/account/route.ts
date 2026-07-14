@@ -2,7 +2,7 @@
 
 import { NextResponse } from 'next/server';
 
-// Update name and/or email
+// TODO: Update name and/or email
 export async function PUT(request: Request) {
     const data = await request.json();
     return NextResponse.json({ received: data }, { status: 201 });
