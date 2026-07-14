@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import prisma from "@/lib/prisma";
+import {validateInput} from "@/lib/validation";
 
 // Get dashboard overview
 export async function GET() {
@@ -31,8 +32,40 @@ export async function GET() {
     }
 }
 
-// TODO: Create "quick" post
+// Create a "quick" post
+interface PostQuickPostReqBody {
+    title: string;
+    content: string;
+    author: string;
+}
 export async function POST(request: Request) {
-    const data = await request.json();
-    return NextResponse.json({ received: data }, { status: 201 });
+    try {
+        const data: PostQuickPostReqBody = await request.json();
+
+        const validation = validateInput(data, [
+            { field: 'title', type: 'string', required: true },
+            { field: 'content', type: 'string', required: true },
+            { field: 'author', type: 'string', required: true },
+        ]);
+
+        if (!validation.valid) {
+            return validation.error;
+        }
+
+        const res = await prisma.posts.create({
+            data: {
+                title: data.title,
+                content: data.content,
+                author: data.author,
+                status: 1,
+            }
+        })
+
+        return NextResponse.json({ res }, { status: 201 });
+    } catch (err: any) {
+        return NextResponse.json(
+            { error: 'Failed to create post', reason: err.message },
+            { status: 500 }
+        );
+    }
 }
