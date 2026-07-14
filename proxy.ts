@@ -42,6 +42,22 @@ export async function proxy(request: NextRequest) {
 
     const session = await getAuthSession(request);
 
+    if (pathname.startsWith('/api/admin')) {
+        if (!session) {
+            return NextResponse.json(
+                { error: 'Unauthorized', description: 'Admin endpoints require authentication.' },
+                { status: 401 }
+            );
+        }
+
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('x-user-id', session.user.sub);
+
+        return NextResponse.next({
+            request: { headers: requestHeaders },
+        });
+    }
+
     if (pathname === "/" && session) {
         return NextResponse.redirect(new URL("/dashboard", request.url));
     }
