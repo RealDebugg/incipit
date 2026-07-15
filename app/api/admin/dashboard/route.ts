@@ -22,9 +22,8 @@ export async function GET() {
             },
         });
 
-        return NextResponse.json({ postsCount, tagsCount, latestPost });
+        return NextResponse.json({ postsCount, tagsCount, latestPost }, { status: 200 });
     } catch (err: any) {
-        console.error(err);
         return NextResponse.json(
             { error: 'Failed to fetch dashboard data', reason: err.message },
             { status: 500 }

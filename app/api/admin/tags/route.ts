@@ -6,9 +6,8 @@ import { validateInput } from "@/lib/validation";
 export async function GET() {
     try {
         const data = await prisma.tags.findMany();
-        return NextResponse.json({ data });
+        return NextResponse.json({ data }, { status: 200 });
     } catch (err: any) {
-        console.error(err);
         return NextResponse.json(
             { error: 'Failed to fetch tags', reason: err.message },
             { status: 500 }
@@ -39,7 +38,6 @@ export async function POST(request: Request) {
         });
         return NextResponse.json({ res }, { status: 201 });
     } catch (err: any) {
-        console.error(err);
         return NextResponse.json(
             { error: 'Failed to create tag', reason: err.message },
             { status: 500 }
@@ -73,15 +71,8 @@ export async function PUT(request: Request) {
                 name: data.name.trim(),
             },
         });
-        return NextResponse.json({ res });
+        return NextResponse.json({ res }, { status: 200 });
     } catch (err: any) {
-        console.error(err);
-        if (err.code === 'P2025') {
-            return NextResponse.json(
-                { error: 'Tag not found' },
-                { status: 404 }
-            );
-        }
         return NextResponse.json(
             { error: 'Failed to update tag', reason: err.message },
             { status: 500 }
@@ -111,15 +102,8 @@ export async function DELETE(request: Request) {
             }
         });
 
-        return NextResponse.json({ res });
+        return NextResponse.json({ res }, { status: 200 });
     } catch (err: any) {
-        console.error(err);
-        if (err.code === 'P2025') {
-            return NextResponse.json(
-                { error: 'Tag not found' },
-                { status: 404 }
-            );
-        }
         return NextResponse.json(
             { error: 'Failed to delete tag', reason: err.message },
             { status: 500 }
