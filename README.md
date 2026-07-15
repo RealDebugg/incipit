@@ -1,3 +1,5 @@
+This is still a work in progress, please come back later! :D
+
 # Incipit
 > in-ˈsi-pət, -ˈki- : the first part : beginning. specifically : the opening words of a text of a medieval manuscript or early printed book.
 
