@@ -3,7 +3,7 @@ This is still a work in progress, please come back later! :D
 # Incipit
 > in-ˈsi-pət, -ˈki- : the first part : beginning. specifically : the opening words of a text of a medieval manuscript or early printed book.
 
-This is a [Next.js](https://nextjs.org) based headless CMS & admin interface for blogging which uses [Auth0](https://auth0.com/) for authentication & [Vercel](https://vercel.com) for hosting, [Neon](https://neon.com/) as well as [Prisma](https://www.prisma.io/) for database management.
+This is a [Next.js](https://nextjs.org) based headless CMS & admin interface for blogging which uses [Auth0](https://auth0.com/) for authentication & [Vercel](https://vercel.com) for hosting and blob storage, [Neon](https://neon.com/) as well as [Prisma](https://www.prisma.io/) for database management.
 
 ## Getting Started
 

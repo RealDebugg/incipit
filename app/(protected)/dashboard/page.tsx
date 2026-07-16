@@ -50,9 +50,9 @@ export default function DashboardPage() {
       <PageBreadcrumbs breadcrumbs={breadcrumbs} />
       <div className="flex flex-1 flex-col gap-4 p-4">
           <h1 className="text-2xl font-bold block sm:hidden">Dashboard</h1>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-          <div className="grid auto-rows-min gap-4 md:grid-cols-2">
-              <div className="aspect-video rounded-xl gap-4 flex flex-col">
+          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min hidden sm:block" />
+          <div className="flex flex-col sm:grid auto-rows-min gap-4 md:grid-cols-2">
+              <div className="aspect-video rounded-xl gap-4 flex flex-col order-2 sm:order-1">
                   <Card className="rounded-xl border py-6 flex-1 justify-center">
                       <CardHeader className="gap-2 px-6">
                           {loading ?
@@ -98,10 +98,11 @@ export default function DashboardPage() {
                       </CardHeader>
                   </Card>
               </div>
-              <div className="aspect-video rounded-xl bg-muted/50 px-6 py-6 flex flex-col gap-4">
+              <div className="aspect-video rounded-xl bg-muted/50 px-6 py-6 flex flex-col gap-4 order-1 sm:order-2">
+                  {/*TODO: Implement saving*/}
                   <CardTitle>Quick Draft</CardTitle>
                   <Input placeholder="Title" className="h-9 rounded-md px-3 py-1"/>
-                  <div className="border border-input rounded-md flex-1 bg-[#1f1f1f] overflow-scroll">
+                  <div className="border border-input rounded-md flex-1 bg-[#1f1f1f] sm:overflow-scroll">
                     <Editor/>
                   </div>
                   <Button className="rounded-md px-4 w-fit" size="lg">
