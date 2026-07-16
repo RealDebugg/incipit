@@ -7,13 +7,12 @@ const breadcrumbs = [
   { label: "Posts" },
 ];
 
-/*TODO: page title = block sm:hidden*/
-
 export default function PostsPage() {
   return (
       <>
           <PageBreadcrumbs breadcrumbs={breadcrumbs}/>
           <div className="flex flex-1 flex-col gap-4 p-4">
+              <h1 className="text-2xl font-bold block sm:hidden">Posts</h1>
               <div className="flex items-center gap-4">
                   <div className="flex gap-2">
                       {/*TODO: Implement search*/}

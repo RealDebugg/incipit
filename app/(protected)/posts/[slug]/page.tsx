@@ -4,7 +4,6 @@ import { PageBreadcrumbs } from "@/components/app-shell";
 import { useParams } from "next/navigation";
 
 /*https://quilljs.com/*/
-/*TODO: page title = block sm:hidden*/
 
 export default function SlugPage() {
   const slug = useParams()?.slug;
@@ -13,15 +12,18 @@ export default function SlugPage() {
       ? slug
       : "Missing post";
 
+  const breadcrumb = slugLabel == "new" ? "New Post" : "Edit: " + slugLabel
+
   const breadcrumbs = [
     { label: "Posts", href: "/posts" },
-    { label: slugLabel == "new" ? "New Post" : "Edit: " + slugLabel },
+    { label: breadcrumb },
   ];
 
   return (
     <>
         <PageBreadcrumbs breadcrumbs={breadcrumbs} />
         <div className="flex flex-1 flex-col gap-4 p-4">
+            <h1 className="text-2xl font-bold block sm:hidden">{breadcrumb}</h1>
             <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                 <div className="aspect-video rounded-xl bg-muted/50" />
                 <div className="aspect-video rounded-xl bg-muted/50" />

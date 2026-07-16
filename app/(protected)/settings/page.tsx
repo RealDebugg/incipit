@@ -4,13 +4,12 @@ const breadcrumbs = [
   { label: "Settings" },
 ];
 
-/*TODO: page title = block sm:hidden*/
-
 export default function SettingsPage() {
   return (
     <>
       <PageBreadcrumbs breadcrumbs={breadcrumbs} />
       <div className="flex flex-1 flex-col gap-4 p-4">
+          <h1 className="text-2xl font-bold block sm:hidden">Settings</h1>
         <div className="grid auto-rows-min gap-4 md:grid-cols-3">
           <div className="aspect-video rounded-xl bg-muted/50" />
           <div className="aspect-video rounded-xl bg-muted/50" />

@@ -56,7 +56,7 @@ export async function POST(request: Request) {
                 title: data.title,
                 content: data.content,
                 author: data.author,
-                status: 1,
+                status: 0, //Draft
             }
         })
 
