@@ -52,6 +52,9 @@ export async function proxy(request: NextRequest) {
 
         const requestHeaders = new Headers(request.headers);
         requestHeaders.set('x-user-id', session.user.sub);
+        requestHeaders.set('x-user-name', session.user.name || session.user.nickname || 'User');
+        requestHeaders.set('x-user-email', session.user.email || '');
+        requestHeaders.set('x-user-picture', session.user.picture || '');
 
         return NextResponse.next({
             request: { headers: requestHeaders },
