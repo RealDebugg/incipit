@@ -17,7 +17,6 @@ export async function GET() {
             },
             select: {
                 id: true,
-                date: true,
                 title: true,
             },
         });
