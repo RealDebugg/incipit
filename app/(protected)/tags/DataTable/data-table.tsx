@@ -15,7 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import {DataTablePagination} from "@/app/(protected)/tags/pagination";
+import {DataTablePagination} from "@/app/(protected)/tags/DataTable/pagination";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]

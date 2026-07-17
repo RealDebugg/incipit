@@ -1,11 +1,15 @@
 "use client"
 
 import { PageBreadcrumbs } from "@/components/app-shell";
-import {DataTable} from "@/app/(protected)/tags/data-table";
-import {columns, Tag} from "@/app/(protected)/tags/columns";
+import {DataTable} from "@/app/(protected)/tags/DataTable/data-table";
+import {columns, Tag} from "@/app/(protected)/tags/DataTable/columns";
 import {useCallback, useEffect, useState} from "react";
 import {Spinner} from "@/components/ui/spinner";
 import {PaginationState} from "@tanstack/react-table";
+import {Input} from "@/components/ui/input";
+import {PlusIcon} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Separator} from "@/components/ui/separator";
 
 const breadcrumbs = [
   { label: "Tags" },
@@ -61,7 +65,19 @@ export default function TagsPage() {
                         <Spinner className="size-8"/>
                     </div>
                 ) : (
-                    <DataTable columns={columns} data={tags} pageCount={pageCount} pagination={pagination} onPaginationChange={setPagination}/>
+                    <>
+                        <p>Create a new tag</p>
+                        <div className="flex gap-2">
+                            {/*TODO: Implement*/}
+                            <Input placeholder="Tag Name" className="h-9 rounded-md px-3 py-1"/>
+                            <Button className="rounded-md px-4" size="lg">
+                                <PlusIcon/>
+                                Create Tag
+                            </Button>
+                        </div>
+                        <Separator />
+                        <DataTable columns={columns} data={tags} pageCount={pageCount} pagination={pagination} onPaginationChange={setPagination}/>
+                    </>
                 )}
             </div>
         </>

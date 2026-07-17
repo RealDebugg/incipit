@@ -10,7 +10,7 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import { PenLineIcon, Settings2Icon, LayoutDashboardIcon, TagsIcon } from "lucide-react"
+import {PenLineIcon, LayoutDashboardIcon, TagsIcon, BadgeCheckIcon} from "lucide-react"
 
 const data = {
   navMain: [
@@ -44,11 +44,10 @@ const data = {
   ],
   navSecondary: [
     {
-      title: "Settings",
-      url: "/settings",
+      title: "Account",
+      url: "/account",
       icon: (
-        <Settings2Icon
-        />
+        <BadgeCheckIcon/>
       ),
       isActive: false,
     },
