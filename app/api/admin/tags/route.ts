@@ -27,9 +27,9 @@ export async function GET(request: Request) {
             take: Number(query.limit),
         });
 
-        const count = await prisma.tags.count();
+        const count = Math.ceil(await prisma.tags.count() / Number(query.limit));
 
-        return NextResponse.json({ data, count}, { status: 200 });
+        return NextResponse.json({ data, count }, { status: 200 });
     } catch (err: any) {
         return NextResponse.json(
             { error: 'Failed to fetch tags', reason: err.message },

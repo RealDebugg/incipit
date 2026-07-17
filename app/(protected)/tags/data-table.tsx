@@ -20,20 +20,30 @@ import {DataTablePagination} from "@/app/(protected)/tags/pagination";
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
-    pageCount?: number  // Total number of pages
-    onPaginationChange?: (pagination: PaginationState) => void
+    pageCount?: number
+    pagination: PaginationState
+    onPaginationChange: (pagination: PaginationState) => void
 }
 
 export function DataTable<TData, TValue>({
-                                             columns,
-                                             data,
-                                             pageCount,
-                                         }: DataTableProps<TData, TValue>) {
+     columns,
+     data,
+     pageCount,
+     pagination,
+     onPaginationChange
+}: DataTableProps<TData, TValue>) {
     const table = useReactTable({
         data,
         columns,
         pageCount: pageCount ?? -1,
         manualPagination: true,
+        state: {
+            pagination,
+        },
+        onPaginationChange: (updater) => {
+            const newPagination = typeof updater === 'function' ? updater(pagination) : updater
+            onPaginationChange(newPagination)
+        },
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
     })

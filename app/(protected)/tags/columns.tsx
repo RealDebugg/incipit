@@ -34,6 +34,7 @@ export const columns: ColumnDef<Tag>[] = [
                     <DropdownMenuContent align="end">
                         <DropdownMenuGroup>
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>Edit Tag</DropdownMenuItem>
                             <DropdownMenuItem>Delete Tag</DropdownMenuItem>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>

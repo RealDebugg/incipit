@@ -38,7 +38,7 @@ export async function GET(request: Request) {
             },
         })
 
-        const count = await prisma.tags.count();
+        const count = Math.ceil(await prisma.posts.count() / Number(query.limit));
 
         return NextResponse.json({ res, count }, { status: 200 });
     } catch (err: any) {
