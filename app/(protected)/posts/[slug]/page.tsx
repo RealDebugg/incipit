@@ -1,34 +1,11 @@
-"use client";
+import Client from "@/app/(protected)/posts/[slug]/client";
+import {Metadata} from "next";
 
-import { PageBreadcrumbs } from "@/components/app-shell";
-import { useParams } from "next/navigation";
+/*TODO: Post title*/
+export const metadata: Metadata = {
+    title: "Placeholder Title"
+};
 
 export default function SlugPage() {
-  const slug = useParams()?.slug;
-  const slugLabel =
-    typeof slug === "string" && slug.trim().length > 0
-      ? slug
-      : "Missing post";
-
-  const breadcrumb = slugLabel == "new" ? "New Post" : "Edit: " + slugLabel
-
-  const breadcrumbs = [
-    { label: "Posts", href: "/posts" },
-    { label: breadcrumb },
-  ];
-
-  return (
-    <>
-        <PageBreadcrumbs breadcrumbs={breadcrumbs} />
-        <div className="flex flex-1 flex-col gap-4 p-4">
-            <h1 className="text-2xl font-bold block sm:hidden">{breadcrumb}</h1>
-            <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div className="aspect-video rounded-xl bg-muted/50" />
-                <div className="aspect-video rounded-xl bg-muted/50" />
-                <div className="aspect-video rounded-xl bg-muted/50" />
-            </div>
-            <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
-        </div>
-    </>
-  );
+  return <Client/>;
 }
