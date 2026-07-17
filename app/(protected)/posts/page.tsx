@@ -29,7 +29,7 @@ export default function PostsPage() {
               {/*TODO: Fetch post list, include delete and unpublish quick actions*/}
               {/*TODO: Skeleton while loading*/}
               {/*TODO: If no posts, show an empty state (shadcnuikit.com)*/}
-              {/*TODO: Datalist includes: cover photo, title, author, status, date, quick actions*/}
+              {/*TODO: Datalist includes: cover photo, title, author, status, date, quick actions, https://ui.shadcn.com/docs/components/base/data-table*/}
               {/*https://shadcnuikit.com/dashboard/pages/products*/}
               <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                   <div className="aspect-video rounded-xl bg-muted/50"/>
