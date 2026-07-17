@@ -10,7 +10,7 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import {PenLineIcon, LayoutDashboardIcon, TagsIcon, BadgeCheckIcon} from "lucide-react"
+import {PenLineIcon, LayoutDashboardIcon, TagsIcon, CircleUserRoundIcon} from "lucide-react"
 
 const data = {
   navMain: [
@@ -18,8 +18,7 @@ const data = {
       title: "Dashboard",
       url: "/dashboard",
       icon: (
-        <LayoutDashboardIcon
-        />
+        <LayoutDashboardIcon/>
       ),
       isActive: true,
     },
@@ -27,8 +26,7 @@ const data = {
       title: "Posts",
       url: "/posts",
       icon: (
-        <PenLineIcon
-        />
+        <PenLineIcon/>
       ),
       isActive: false,
     },
@@ -36,8 +34,7 @@ const data = {
       title: "Tags",
       url: "/tags",
       icon: (
-        <TagsIcon
-        />
+        <TagsIcon/>
       ),
       isActive: false,
     },
@@ -47,7 +44,7 @@ const data = {
       title: "Account",
       url: "/account",
       icon: (
-        <BadgeCheckIcon/>
+        <CircleUserRoundIcon/>
       ),
       isActive: false,
     },
