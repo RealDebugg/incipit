@@ -2,8 +2,8 @@
 
 import { PageBreadcrumbs } from "@/components/app-shell";
 import {DataTable} from "@/app/(protected)/tags/DataTable/data-table";
-import {columns, Tag} from "@/app/(protected)/tags/DataTable/columns";
-import {useCallback, useEffect, useState} from "react";
+import {createColumns, Tag} from "@/app/(protected)/tags/DataTable/columns";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import {Spinner} from "@/components/ui/spinner";
 import {PaginationState} from "@tanstack/react-table";
 import {Input} from "@/components/ui/input";
@@ -91,6 +91,11 @@ export default function TagsPage() {
             setCreating(false);
         }
     };
+
+    const columns = useMemo(
+        () => createColumns(() => fetchTags(pagination.pageIndex + 1, pagination.pageSize)),
+        [fetchTags, pagination.pageIndex, pagination.pageSize]
+    );
 
     return (
         <>
