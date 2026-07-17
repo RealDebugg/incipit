@@ -3,10 +3,33 @@ import prisma from "@/lib/prisma";
 import { validateInput } from "@/lib/validation";
 
 // Get all tags
-export async function GET() {
+export async function GET(request: Request) {
     try {
-        const data = await prisma.tags.findMany();
-        return NextResponse.json({ data }, { status: 200 });
+        const { searchParams } = new URL(request.url);
+        const query = {
+            page: searchParams.get('page'),
+            limit: searchParams.get('limit'),
+        };
+
+        const validation = validateInput(query, [
+            { field: 'page', type: 'string', required: true },
+            { field: 'limit', type: 'string', required: true },
+        ]);
+
+        if (!validation.valid) {
+            return validation.error;
+        }
+
+        const offset = (Number(query.page) - 1) * Number(query.limit);
+
+        const data = await prisma.tags.findMany({
+            skip: offset,
+            take: Number(query.limit),
+        });
+
+        const count = await prisma.tags.count();
+
+        return NextResponse.json({ data, count}, { status: 200 });
     } catch (err: any) {
         return NextResponse.json(
             { error: 'Failed to fetch tags', reason: err.message },

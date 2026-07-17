@@ -38,7 +38,9 @@ export async function GET(request: Request) {
             },
         })
 
-        return NextResponse.json({ res }, { status: 200 });
+        const count = await prisma.tags.count();
+
+        return NextResponse.json({ res, count }, { status: 200 });
     } catch (err: any) {
         return NextResponse.json({ error: 'Failed to fetch posts', reason: err.message }, { status: 500 });
     }
