@@ -67,7 +67,7 @@ export async function GET(request: Request) {
 }
 
 
-// Delete post
+// Change post-status
 interface PutPostReqBody {
     id: number;
     status: number;
