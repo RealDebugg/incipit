@@ -21,6 +21,9 @@ export async function GET(request: Request) {
         const res = await prisma.posts.findFirst({
             where: {
                 id: query.id,
+            },
+            include: {
+                tags: true
             }
         })
 
@@ -39,6 +42,7 @@ interface PostPostReqBody {
     coverPhotoBlob: string | null;
     tags: number[] | null;
     status: number;
+    date?: string;
 }
 export async function POST(request: Request) {
     try {
@@ -66,6 +70,7 @@ export async function POST(request: Request) {
                     connect: data.tags.map(id => ({ id }))
                 } : undefined,
                 status: data.status,
+                ...(data.date && { date: new Date(data.date) }),
             },
         });
         return NextResponse.json({ id: res.id }, { status: 201 });
@@ -87,6 +92,7 @@ interface PutPostReqBody {
     coverPhotoBlob: string | null;
     tags: number[] | null;
     status: number;
+    date?: string;
 }
 export async function PUT(request: Request) {
     try {
@@ -123,6 +129,7 @@ export async function PUT(request: Request) {
                 description: data.description,
                 coverPhotoBlob: data.coverPhotoBlob,
                 status: data.status,
+                ...(data.date && { date: new Date(data.date) }),
                 tags: {
                     disconnect: currentPost.tags.map(tag => ({ id: tag.id })),
                     connect: data.tags ? data.tags.map(id => ({ id })) : []

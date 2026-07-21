@@ -17,16 +17,19 @@ export type AppBreadcrumb = {
 type AppShellContextValue = {
   breadcrumbs: AppBreadcrumb[];
   setBreadcrumbs: (breadcrumbs: AppBreadcrumb[]) => void;
+  headerActions: ReactNode;
+  setHeaderActions: (actions: ReactNode) => void;
 };
 
 const AppShellContext = createContext<AppShellContextValue | null>(null);
 
 export function AppShellProvider({ children }: { children: ReactNode }) {
   const [breadcrumbs, setBreadcrumbs] = useState<AppBreadcrumb[]>([]);
+  const [headerActions, setHeaderActions] = useState<ReactNode>(null);
 
   const value = useMemo(
-    () => ({ breadcrumbs, setBreadcrumbs }),
-    [breadcrumbs]
+    () => ({ breadcrumbs, setBreadcrumbs, headerActions, setHeaderActions }),
+    [breadcrumbs, headerActions]
   );
 
   return (
@@ -60,6 +63,20 @@ export function PageBreadcrumbs({
       setBreadcrumbs([]);
     };
   }, [breadcrumbs, setBreadcrumbs]);
+
+  return null;
+}
+
+export function PageHeaderActions({ children }: { children: ReactNode }) {
+  const { setHeaderActions } = useAppShell();
+
+  useEffect(() => {
+    setHeaderActions(children);
+
+    return () => {
+      setHeaderActions(null);
+    };
+  }, [children, setHeaderActions]);
 
   return null;
 }

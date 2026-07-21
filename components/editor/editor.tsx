@@ -3,7 +3,7 @@ import "@blocknote/core/fonts/inter.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/shadcn";
 import "@blocknote/shadcn/style.css";
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useEffect, useImperativeHandle } from "react";
 
 /*TODO: Use Vercel Blob Storage*/
 async function uploadFile(file: File) {
@@ -24,9 +24,13 @@ export interface EditorRef {
     getEditor: () => ReturnType<typeof useCreateBlockNote>;
 }
 
+interface EditorProps {
+    initialContent?: string;
+}
+
 // Our <Editor> component we can reuse later
-const Editor = forwardRef<EditorRef>((props, ref) => {
-    // Creates a new editor instance.
+const Editor = forwardRef<EditorRef, EditorProps>(({ initialContent }, ref) => {
+    // Creates a new editor instance
     const editor = useCreateBlockNote({
         uploadFile
     });
@@ -34,6 +38,14 @@ const Editor = forwardRef<EditorRef>((props, ref) => {
     useImperativeHandle(ref, () => ({
         getEditor: () => editor
     }));
+
+    // Load HTML content when initialContent changes
+    useEffect(() => {
+        if (initialContent && editor) {
+            const blocks = editor.tryParseHTMLToBlocks(initialContent);
+            editor.replaceBlocks(editor.document, blocks);
+        }
+    }, [initialContent, editor]);
 
     // Renders the editor instance using a React component.
     return <BlockNoteView editor={editor} />;

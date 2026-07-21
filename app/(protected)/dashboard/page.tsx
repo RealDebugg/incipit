@@ -118,6 +118,7 @@ export default function DashboardPage() {
         fetchData();
     }, []);
 
+    /*TODO: Mobile friendly UI*/
     return (
     <>
       <PageBreadcrumbs breadcrumbs={breadcrumbs} />

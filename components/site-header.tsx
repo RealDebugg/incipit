@@ -18,7 +18,7 @@ import { PanelLeftIcon } from "lucide-react"
 
 export function SiteHeader() {
   const { toggleSidebar } = useSidebar()
-  const { breadcrumbs } = useAppShell()
+  const { breadcrumbs, headerActions } = useAppShell()
 
   return (
     <header className="sticky top-0 z-50 flex w-full items-center border-b bg-background">
@@ -58,6 +58,11 @@ export function SiteHeader() {
             </BreadcrumbList>
           </Breadcrumb>
         ) : null}
+        {headerActions && (
+          <div className="ml-auto flex items-center gap-2">
+            {headerActions}
+          </div>
+        )}
       </div>
     </header>
   )
