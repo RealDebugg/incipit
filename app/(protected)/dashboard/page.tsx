@@ -198,9 +198,13 @@ export default function DashboardPage() {
                                           </CardTitle>:
                                           <>
                                               <CardDescription>Latest Post</CardDescription>
-                                              <CardTitle className="text-2xl lg:text-3xl font-semibold">
-                                                  <Link href={`posts/${dashData?.latestPost.id}`} className="underline text-blue-500">{dashData?.latestPost.title}</Link>
-                                              </CardTitle>
+                                              {!dashData?.latestPost ?
+                                                  <CardTitle className="text-2xl lg:text-3xl font-semibold">You haven't published anything yet</CardTitle> :
+                                                  <CardTitle className="text-2xl lg:text-3xl font-semibold">
+                                                      <Link href={`posts/${dashData?.latestPost.id}`} className="underline text-blue-500">{dashData?.latestPost.title}</Link>
+                                                  </CardTitle>
+                                              }
+
                                           </>
                                       }
                                   </CardHeader>

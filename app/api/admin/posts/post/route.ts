@@ -161,7 +161,7 @@ export async function DELETE(request: Request) {
         return NextResponse.json({ id: res.id }, { status: 201 });
     } catch (err: any) {
         return NextResponse.json(
-            { error: 'Failed to create post', reason: err.message },
+            { error: 'Failed to delete post', reason: err.message },
             { status: 500 }
         );
     }
