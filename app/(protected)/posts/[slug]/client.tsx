@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Editor } from "@/components/editor/DynamicEditor";
 import { Spinner } from "@/components/ui/spinner";
 import { Badge } from "@/components/ui/badge";
-import { X, CalendarIcon, SearchIcon } from "lucide-react";
+import {X, CalendarIcon, SearchIcon, Upload} from "lucide-react";
 import { toast } from "sonner";
 import type { EditorRef } from "@/components/editor/editor";
 import "@blocknote/core/fonts/inter.css";
@@ -27,6 +27,13 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import {
+    FileUpload,
+    FileUploadDropzone,
+    FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadItemProgress,
+    FileUploadList,
+    FileUploadTrigger
+} from "@/components/ui/file-upload";
 
 interface Tag {
     id: number;
@@ -64,6 +71,7 @@ export default function Client() {
     const [postContent, setPostContent] = useState<string | null>(null);
     const [futureDateDialogOpen, setFutureDateDialogOpen] = useState(false);
     const [pendingPublishDate, setPendingPublishDate] = useState<Date | null>(null);
+    const [files, setFiles] = useState<File[]>([]);
 
     const slugLabel =
         typeof slug === "string" && slug.trim().length > 0
@@ -316,12 +324,48 @@ export default function Client() {
                 <div className="flex w-1/4 flex-none flex-col gap-4">
                     <h2 className="text-lg font-semibold">Metadata</h2>
 
-                    {/* TODO: Implement image uploader with Vercel Blob Storage + https://www.shadcnblocks.com/component/file-upload/file-upload-special-3 */}
-                    <div className="w-full border-2 border-dashed border-muted-foreground/25 rounded-lg p-12 text-center hover:border-muted-foreground/40 transition-colors cursor-pointer">
-                        <p className="text-sm text-muted-foreground">
-                            Click to add cover image
-                        </p>
-                    </div>
+                    {/* TODO: Implement image uploader with Vercel Blob Storage + https://diceui.com/docs/components/radix/file-upload#with-uploadthing */}
+                    <FileUpload
+                        accept="image/*"
+                        maxFiles={1}
+                        maxSize={4 * 1024 * 1024}
+                        className="w-full max-w-md"
+                    >
+                        <FileUploadDropzone>
+                            <div className="flex flex-col items-center gap-1 text-center">
+                                <div className="flex items-center justify-center rounded-full border p-2.5">
+                                    <Upload className="size-6 text-muted-foreground" />
+                                </div>
+                                <p className="font-medium text-sm">Drag & drop images here</p>
+                                <p className="text-muted-foreground text-xs">
+                                    Or click to browse (up to 4MB each)
+                                </p>
+                            </div>
+                            <FileUploadTrigger render={
+                                <Button variant="outline" size="sm" className="mt-2 w-fit">
+                                    Browse files
+                                </Button>
+                            }/>
+                        </FileUploadDropzone>
+                        <FileUploadList>
+                            {files.map((file, index) => (
+                                <FileUploadItem key={index} value={file}>
+                                    <div className="flex w-full items-center gap-2">
+                                        <FileUploadItemPreview />
+                                        <FileUploadItemMetadata />
+                                        <FileUploadItemDelete
+                                            render={
+                                                <Button variant="ghost" size="icon" className="size-7">
+                                                    <X />
+                                                </Button>
+                                            }
+                                        />
+                                    </div>
+                                    <FileUploadItemProgress />
+                                </FileUploadItem>
+                            ))}
+                        </FileUploadList>
+                    </FileUpload>
 
                     <Card className="rounded-xl border justify-center p-6">
                         <Field>
