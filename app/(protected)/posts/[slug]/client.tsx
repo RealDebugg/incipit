@@ -16,6 +16,8 @@ import {X, CalendarIcon, SearchIcon, Upload} from "lucide-react";
 import { toast } from "sonner";
 import type { EditorRef } from "@/components/editor/editor";
 import "@blocknote/core/fonts/inter.css";
+import uploadFile from "@/lib/blob";
+import type { FileUploadProps } from "@/components/ui/file-upload";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {
     AlertDialog,
@@ -30,7 +32,7 @@ import {
 import {
     FileUpload,
     FileUploadDropzone,
-    FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview, FileUploadItemProgress,
+    FileUploadItem, FileUploadItemDelete, FileUploadItemMetadata, FileUploadItemPreview,
     FileUploadList,
     FileUploadTrigger
 } from "@/components/ui/file-upload";
@@ -72,6 +74,8 @@ export default function Client() {
     const [futureDateDialogOpen, setFutureDateDialogOpen] = useState(false);
     const [pendingPublishDate, setPendingPublishDate] = useState<Date | null>(null);
     const [files, setFiles] = useState<File[]>([]);
+    const [isUploading, setIsUploading] = useState(false);
+    const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
 
     const slugLabel =
         typeof slug === "string" && slug.trim().length > 0
@@ -122,7 +126,7 @@ export default function Client() {
 
             fetch(`/api/admin/posts/post?id=${postIdNum}`)
                 .then(res => res.json())
-                .then(data => {
+                .then(async data => {
                     if (data?.res) {
                         const post: Post = data.res;
                         setPostId(post.id);
@@ -130,6 +134,22 @@ export default function Client() {
                         setDescription(post.description || "");
                         setSelectedTags(post.tags || []);
                         setPostContent(post.content);
+                        setCoverImageUrl(post.coverPhotoBlob);
+
+                        // Convert coverPhotoBlob URL to File object for display
+                        if (post.coverPhotoBlob) {
+                            try {
+                                const response = await fetch(post.coverPhotoBlob);
+                                const blob = await response.blob();
+                                const encodedFilename = post.coverPhotoBlob.split('/').pop() || 'cover-image.jpg';
+                                const filename = decodeURIComponent(encodedFilename);
+                                const file = new File([blob], filename, { type: blob.type });
+                                setFiles([file]);
+                            } catch (err) {
+                                console.error('Error loading cover image:', err);
+                            }
+                        }
+
                         if (post.date) {
                             const parsedDate = new Date(post.date);
                             if (!isNaN(parsedDate.getTime())) {
@@ -149,6 +169,35 @@ export default function Client() {
         }
     }, [isNewPost, slug]);
 
+    const onUpload: NonNullable<FileUploadProps["onUpload"]> = async (files) => {
+        try {
+            setIsUploading(true);
+
+            if (files.length === 0) return;
+
+            // Only use the first file (enforcing single file upload)
+            const file = files[0];
+
+            const url = await uploadFile(file);
+
+            if (url) {
+                setCoverImageUrl(url);
+                toast.success("Cover image uploaded successfully");
+            } else {
+                toast.error("Failed to upload cover image");
+            }
+        } catch (error) {
+            toast.error(error instanceof Error ? error.message : "An unknown error occurred");
+        } finally {
+            setIsUploading(false);
+        }
+    };
+
+    const onFileReject = (file: File, message: string) => {
+        toast.error(message, {
+            description: `"${file.name.length > 20 ? `${file.name.slice(0, 20)}...` : file.name}" has been rejected`,
+        });
+    };
 
     const handlePublishClick = () => {
         // Check if date is in the future when publishing
@@ -188,7 +237,7 @@ export default function Client() {
                 title,
                 content: htmlContent,
                 description: description || null,
-                coverPhotoBlob: null, // TODO: Implement image upload
+                coverPhotoBlob: coverImageUrl,
                 tags: selectedTags.map(t => t.id),
                 status,
                 ...(date && { date: date.toISOString() }),
@@ -324,21 +373,26 @@ export default function Client() {
                 <div className="flex w-1/4 flex-none flex-col gap-4">
                     <h2 className="text-lg font-semibold">Metadata</h2>
 
-                    {/* TODO: Implement image uploader with Vercel Blob Storage + https://diceui.com/docs/components/radix/file-upload#with-uploadthing */}
                     <FileUpload
                         accept="image/*"
                         maxFiles={1}
                         maxSize={4 * 1024 * 1024}
                         className="w-full max-w-md"
+                        value={files}
+                        onValueChange={setFiles}
+                        onUpload={onUpload}
+                        onFileReject={onFileReject}
+                        disabled={isUploading || files.length > 0}
+                        multiple={false}
                     >
                         <FileUploadDropzone>
                             <div className="flex flex-col items-center gap-1 text-center">
                                 <div className="flex items-center justify-center rounded-full border p-2.5">
                                     <Upload className="size-6 text-muted-foreground" />
                                 </div>
-                                <p className="font-medium text-sm">Drag & drop images here</p>
+                                <p className="font-medium text-sm">Drag & drop cover image here</p>
                                 <p className="text-muted-foreground text-xs">
-                                    Or click to browse (up to 4MB each)
+                                    Or click to browse (up to 4MB)
                                 </p>
                             </div>
                             <FileUploadTrigger render={
@@ -361,7 +415,6 @@ export default function Client() {
                                             }
                                         />
                                     </div>
-                                    <FileUploadItemProgress />
                                 </FileUploadItem>
                             ))}
                         </FileUploadList>
