@@ -4,21 +4,7 @@ import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView } from "@blocknote/shadcn";
 import "@blocknote/shadcn/style.css";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
-
-/*TODO: Use Vercel Blob Storage*/
-async function uploadFile(file: File) {
-    const body = new FormData();
-    body.append("file", file);
-
-    const ret = await fetch("https://tmpfiles.org/api/v1/upload", {
-        method: "POST",
-        body: body,
-    });
-    return (await ret.json()).data.url.replace(
-        "tmpfiles.org/",
-        "tmpfiles.org/dl/",
-    );
-}
+import uploadFile from "@/lib/blob";
 
 export interface EditorRef {
     getEditor: () => ReturnType<typeof useCreateBlockNote>;
