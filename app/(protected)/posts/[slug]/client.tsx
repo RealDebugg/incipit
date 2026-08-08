@@ -348,7 +348,7 @@ export default function Client() {
                 </AlertDialogContent>
             </AlertDialog>
 
-            <div className="flex flex-1 flex-row gap-4 p-4">
+            <div className="sm:flex flex-1 flex-row gap-4 p-4">
                 <div className="flex-1 flex flex-col gap-4">
                     <Input
                         placeholder="Add a title"
@@ -370,7 +370,7 @@ export default function Client() {
                         <Editor ref={editorRef} initialContent={postContent || undefined} />
                     </div>
                 </div>
-                <div className="flex w-1/4 flex-none flex-col gap-4">
+                <div className="flex sm:w-1/4 flex-none flex-col gap-4">
                     <h2 className="text-lg font-semibold">Metadata</h2>
 
                     <FileUpload
