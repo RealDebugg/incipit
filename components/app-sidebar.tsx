@@ -10,7 +10,7 @@ import {
   SidebarContent,
   SidebarFooter,
 } from "@/components/ui/sidebar"
-import {PenLineIcon, LayoutDashboardIcon, TagsIcon, CircleUserRoundIcon} from "lucide-react"
+import {PenLineIcon, LayoutDashboardIcon, TagsIcon} from "lucide-react"
 
 const data = {
   navMain: [
@@ -40,14 +40,14 @@ const data = {
     },
   ],
   navSecondary: [
-    {
+    /*{
       title: "Account",
       url: "/account",
       icon: (
         <CircleUserRoundIcon/>
       ),
       isActive: false,
-    },
+    },*/
   ],
 }
 
