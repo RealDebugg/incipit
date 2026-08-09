@@ -36,6 +36,7 @@ import {
     FileUploadList,
     FileUploadTrigger
 } from "@/components/ui/file-upload";
+import {Separator} from "@/components/ui/separator";
 
 interface Tag {
     id: number;
@@ -299,7 +300,6 @@ export default function Client() {
         );
     }
 
-    /*TODO: Mobile friendly UI*/
     return (
         <>
             <PageBreadcrumbs breadcrumbs={breadcrumbs} />
@@ -370,6 +370,7 @@ export default function Client() {
                         <Editor ref={editorRef} initialContent={postContent || undefined} />
                     </div>
                 </div>
+                <Separator className="sm:hidden my-6" />
                 <div className="flex sm:w-1/4 flex-none flex-col gap-4">
                     <h2 className="text-lg font-semibold">Metadata</h2>
 

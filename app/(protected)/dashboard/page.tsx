@@ -118,7 +118,6 @@ export default function DashboardPage() {
         fetchData();
     }, []);
 
-    /*TODO: Mobile friendly UI*/
     return (
     <>
       <PageBreadcrumbs breadcrumbs={breadcrumbs} />
@@ -161,7 +160,7 @@ export default function DashboardPage() {
                       </Card>
                       <div className="flex flex-col sm:grid auto-rows-min gap-4 md:grid-cols-2">
                           <div className="aspect-video rounded-xl gap-4 flex flex-col order-2 sm:order-1">
-                              <Card className="rounded-xl border py-6 flex-1 justify-center">
+                              <Card className="rounded-xl border py-6 flex-1 justify-center overflow-visible">
                                   <CardHeader className="gap-2 px-6">
                                       {!dashData ?
                                           <CardTitle className="text-2xl lg:text-3xl font-semibold">
@@ -176,7 +175,7 @@ export default function DashboardPage() {
                                       }
                                   </CardHeader>
                               </Card>
-                              <Card className="rounded-xl border py-6 flex-1 justify-center">
+                              <Card className="rounded-xl border py-6 flex-1 justify-center overflow-visible">
                                   <CardHeader className="gap-2 px-6">
                                       {!dashData ?
                                           <CardTitle className="text-2xl lg:text-3xl font-semibold">
@@ -191,7 +190,7 @@ export default function DashboardPage() {
                                       }
                                   </CardHeader>
                               </Card>
-                              <Card className="rounded-xl border py-6 flex-1 justify-center">
+                              <Card className="rounded-xl border py-6 flex-1 justify-center overflow-visible">
                                   <CardHeader className="gap-2 px-6">
                                       {!dashData ?
                                           <CardTitle className="text-2xl lg:text-3xl font-semibold">
@@ -211,7 +210,7 @@ export default function DashboardPage() {
                                   </CardHeader>
                               </Card>
                           </div>
-                          <Card className="aspect-video rounded-xl bg-muted/50 px-6 py-6 flex flex-col gap-4 order-1 sm:order-2 border">
+                          <Card className="aspect-video rounded-xl bg-muted/50 px-6 py-6 flex flex-col gap-4 order-1 sm:order-2 border overflow-visible">
                               <CardTitle>Quick Draft</CardTitle>
                               <Input
                                   placeholder="Title"
