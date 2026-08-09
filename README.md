@@ -6,7 +6,15 @@ This is still a work in progress, please come back later! :D
 This is a [Next.js](https://nextjs.org) based headless CMS & admin interface for blogging which uses [Auth0](https://auth0.com/) for authentication & [Vercel](https://vercel.com) for hosting and blob storage, [Neon](https://neon.com/) as well as [Prisma](https://www.prisma.io/) for database management.
 
 ## Roadmap
+- [ ] Table of contents
+- [ ] Amount of words
+- [ ] How long of a reading time
 - [ ] Finish readme.md
+  - Setting up Auth0
+  - Setting up Neon
+  - Setting up Vercel Blob Storage
+  - Setting up the project locally
+  - Deploying to Vercel
 
 ## Getting Started
 

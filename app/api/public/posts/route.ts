@@ -7,7 +7,24 @@ export async function GET(req: Request) {
         const query = {
             page: searchParams.get('page'),
             limit: searchParams.get('limit'),
+            tags: searchParams.get('tags'),
         };
+
+        // Build where clause with tag filtering
+        const whereClause: any = {
+            status: 1, //published
+        };
+
+        if (query.tags) {
+            const tagArray = query.tags.split(',').map(tag => tag.trim());
+            whereClause.tags = {
+                some: {
+                    name: {
+                        in: tagArray
+                    }
+                }
+            };
+        }
 
         if (!query.page || !query.limit) {
             const data = await prisma.posts.findMany({
@@ -19,9 +36,7 @@ export async function GET(req: Request) {
                     description: true,
                     coverPhotoBlob: true,
                 },
-                where: {
-                    status: 1 //published
-                },
+                where: whereClause,
                 orderBy: {
                     date: 'desc'
                 }
@@ -40,18 +55,14 @@ export async function GET(req: Request) {
                     description: true,
                     coverPhotoBlob: true,
                 },
-                where: {
-                    status: 1 //published
-                },
+                where: whereClause,
                 orderBy: {
                     date: 'desc'
                 }
             });
 
             const totalCount = await prisma.posts.count({
-                where: {
-                    status: 1 //published
-                }
+                where: whereClause
             });
 
             const count = Math.ceil(totalCount / Number(query.limit));
