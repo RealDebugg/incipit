@@ -5,12 +5,12 @@ import { getAuthSession } from "@/lib/session";
 
 export async function POST(request: NextRequest) {
     try {
+        const session = await getAuthSession(request);
         const body = await request.json() as HandleUploadBody;
         const response = await handleUpload({
             body,
             request,
             onBeforeGenerateToken: async () => {
-                const session = await getAuthSession(request);
                 if (!session?.user) {
                     throw new Error("Unauthorized");
                 }
