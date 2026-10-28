@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import type { EditorRef } from "@/components/editor/editor";
 import "@blocknote/core/fonts/inter.css";
 import uploadFile from "@/lib/blob";
+import { MAX_UPLOAD_SIZE } from "@/lib/blob-config";
 import type { FileUploadProps } from "@/components/ui/file-upload";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {
@@ -377,7 +378,7 @@ export default function Client() {
                     <FileUpload
                         accept="image/*"
                         maxFiles={1}
-                        maxSize={4 * 1024 * 1024}
+                        maxSize={MAX_UPLOAD_SIZE}
                         className="w-full max-w-md"
                         value={files}
                         onValueChange={setFiles}
@@ -393,7 +394,7 @@ export default function Client() {
                                 </div>
                                 <p className="font-medium text-sm">Drag & drop cover image here</p>
                                 <p className="text-muted-foreground text-xs">
-                                    Or click to browse (up to 4MB)
+                                    Or click to browse (up to 100 MiB)
                                 </p>
                             </div>
                             <FileUploadTrigger render={

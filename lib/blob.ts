@@ -1,12 +1,17 @@
-'use server';
-import {put} from "@vercel/blob";
+"use client";
+
+import { upload } from "@vercel/blob/client";
+import { MAX_UPLOAD_SIZE } from "@/lib/blob-config";
 
 export default async function uploadFile(file: File) {
-    try {
-        const { url } = await put(file.name, file, { access: "public", allowOverwrite: true });
-        return url;
-    } catch (error) {
-        console.error("Failed to upload file:", error);
-        return "";
+    if (file.size > MAX_UPLOAD_SIZE) {
+        throw new Error("Files must be 100 MiB or smaller.");
     }
+
+    const { url } = await upload(file.name, file, {
+        access: "public",
+        handleUploadUrl: "/api/admin/blob/upload",
+        multipart: true,
+    });
+    return url;
 }
